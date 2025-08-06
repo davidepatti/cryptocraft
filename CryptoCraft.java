@@ -2,10 +2,11 @@ import java.util.Scanner;
 
 public class CryptoCraft {
     String alfabeto = "abcdefghilmnopqrstuvz";
+    int chiave;
+    Scanner sc = new Scanner(System.in);
 
     public void test() {
         System.out.println("Carissimo, inserisci una frase:");
-        var sc = new Scanner(System.in);
 
         String frase = "";
         frase = sc.nextLine();
@@ -19,8 +20,14 @@ public class CryptoCraft {
         frase = frase.replaceAll("ù","u");
         String frasesenzaspazi = frase.replaceAll("[^abcdefghilmnopqrstuvz]", "");
 
-        String codificata = codificaStringa(frasesenzaspazi);
-        System.out.println("LA FRASE CODIFICATA E': "+codificata);
+        String codificata;
+
+
+        codificata = codificaCesare(frasesenzaspazi);
+        System.out.println("LA FRASE CODIFICATA CESARE E': "+codificata);
+
+        codificata = codificaInutile(frasesenzaspazi);
+        System.out.println("LA FRASE CODIFICATA INUTILE E': "+codificata);
     }
 
     public static void main(String[] args) {
@@ -29,25 +36,27 @@ public class CryptoCraft {
         myapp.test();
     }
 
+    String codificaInutile(String originale ) {
+        String codificata = "MRA";
+        return codificata;
+    }
     // questa funzione prende una stringa e la codifica
-    String codificaStringa(String originale) {
+    String codificaCesare(String originale) {
+
+        System.out.println("inserisci un numero chiave");
+        chiave = sc.nextInt();
+        System.out.println("la chiave è " + chiave);
         String codificata = "";
         int lungh = originale.length();
 
         for (int pos =0; pos<lungh; pos=pos+1 ) {
             char carattere_attuale = originale.charAt(pos);
 
-            // applico solo alle posizioni pari
-            if (pos%2==0) {
                 // converte la vecchia posizione nell'alfabeto nella nuova
-                int nuova_posizione = 20 - trova_pos(carattere_attuale);
+                int nuova_posizione =chiave+ trova_pos(carattere_attuale);
+                while (nuova_posizione > 20) nuova_posizione = nuova_posizione - 21;
                 // aggiunge il nuovo carattere alla fine
                 codificata = codificata + alfabeto.charAt(nuova_posizione);
-            }
-            else {
-                codificata = codificata+carattere_attuale;
-
-            }
         }
         return codificata;
     }
