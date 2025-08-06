@@ -12,6 +12,11 @@ public class CryptoCraft {
 
         // TODO: aggiungere altri caratteri da togliere
         frase = frase.toLowerCase();
+        frase = frase.replaceAll("à","a");
+        frase = frase.replaceAll("è","e");
+        frase = frase.replaceAll("ì","i");
+        frase = frase.replaceAll("ò","o");
+        frase = frase.replaceAll("ù","u");
         String frasesenzaspazi = frase.replaceAll("[^abcdefghilmnopqrstuvz]", "");
 
         String codificata = codificaStringa(frasesenzaspazi);
