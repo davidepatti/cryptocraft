@@ -19,14 +19,14 @@ public class CryptoCraft {
         frase = frase.replaceAll("ù","u");
         String frasesenzaspazi = frase.replaceAll("[^abcdefghilmnopqrstuvz]", "");
 
-        String codificata;
+        String codificata_cesare;
+        String codificata_tabite;
 
+        codificata_cesare = codificaCesare(frasesenzaspazi);
+        System.out.println("LA FRASE CODIFICATA CESARE E': "+codificata_cesare);
 
-        codificata = codificaCesare(frasesenzaspazi);
-        System.out.println("LA FRASE CODIFICATA CESARE E': "+codificata);
-
-        codificata = codificaInutile(frasesenzaspazi);
-        System.out.println("LA FRASE CODIFICATA INUTILE E': "+codificata);
+        codificata_tabite = codificaTabite(frasesenzaspazi);
+        System.out.println("LA FRASE CODIFICATA TABITE E': "+codificata_tabite);
     }
 
     public static void main(String[] args) {
@@ -36,18 +36,27 @@ public class CryptoCraft {
     }
 
 
-    String codificaInutile(String originale ) {
-        String codificata =alfabeto;
-        return codificata;
+    String codificaTabite(String originale ) {
+        String risultato = "";
+        int lettino = originale.length();
+        for (int il = 0; il < lettino ; il++) {
+            int pos_old = trova_pos(originale.charAt(il));
+            int pos_new = 20 - pos_old;
+            if (il%2==0)
+            risultato = risultato + alfabeto.charAt(pos_new);
+            else risultato = risultato + alfabeto.charAt(pos_old);
+
+        }
+
+        return risultato;
+
+
     }
     // questa funzione prende una stringa e la codifica
     String codificaCesare(String originale) {
 
-
-
         boolean chiave_ok = false;
-
-        // mentre chiave non e' giusta...
+        //mentre chiave non e' giusta...
         while (!chiave_ok) {
             try {
                 System.out.println("inserisci un numero chiave:");
