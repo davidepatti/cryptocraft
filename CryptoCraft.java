@@ -1,3 +1,4 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class CryptoCraft {
@@ -10,8 +11,6 @@ public class CryptoCraft {
 
         String frase = "";
         frase = sc.nextLine();
-
-        // TODO: aggiungere altri caratteri da togliere
         frase = frase.toLowerCase();
         frase = frase.replaceAll("à","a");
         frase = frase.replaceAll("è","e");
@@ -36,16 +35,32 @@ public class CryptoCraft {
         myapp.test();
     }
 
+
     String codificaInutile(String originale ) {
-        String codificata = "MRA";
+        String codificata =alfabeto;
         return codificata;
     }
     // questa funzione prende una stringa e la codifica
     String codificaCesare(String originale) {
 
-        System.out.println("inserisci un numero chiave");
-        chiave = sc.nextInt();
-        System.out.println("la chiave è " + chiave);
+
+
+        boolean chiave_ok = false;
+
+        // mentre chiave non e' giusta...
+        while (!chiave_ok) {
+            try {
+                System.out.println("inserisci un numero chiave:");
+                chiave = sc.nextInt();
+                chiave_ok = true;
+            } catch (InputMismatchException e) {
+                System.out.println("Ma sei fornito di sci ?");
+                chiave_ok = false;
+                sc.nextLine();
+            }
+        }
+
+
         String codificata = "";
         int lungh = originale.length();
 
@@ -53,10 +68,10 @@ public class CryptoCraft {
             char carattere_attuale = originale.charAt(pos);
 
                 // converte la vecchia posizione nell'alfabeto nella nuova
-                int nuova_posizione =chiave+ trova_pos(carattere_attuale);
-                while (nuova_posizione > 20) nuova_posizione = nuova_posizione - 21;
+                int nuova_posizione_cesare =chiave+ trova_pos(carattere_attuale);
+                while (nuova_posizione_cesare > 20) nuova_posizione_cesare = nuova_posizione_cesare - 21;
                 // aggiunge il nuovo carattere alla fine
-                codificata = codificata + alfabeto.charAt(nuova_posizione);
+                codificata = codificata + alfabeto.charAt(nuova_posizione_cesare);
         }
         return codificata;
     }
@@ -69,9 +84,7 @@ public class CryptoCraft {
                 return p;
             }
         }
-        System.out.println("Non e' un carattere valido");
+        System.out.println("ERROREEEEEEEEEEEEEEEEEEEEEEEEEEEE!!!!!!!!!!!!!!!!!!");
         return -1;
     }
-
-
 }
