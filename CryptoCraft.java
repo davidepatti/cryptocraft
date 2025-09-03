@@ -21,12 +21,16 @@ public class CryptoCraft {
 
         String codificata_cesare;
         String codificata_tabite;
+        String codificata_lettino;
 
         codificata_cesare = codificaCesare(frasesenzaspazi);
         System.out.println("LA FRASE CODIFICATA CESARE E': "+codificata_cesare);
 
         codificata_tabite = codificaTabite(frasesenzaspazi);
         System.out.println("LA FRASE CODIFICATA TABITE E': "+codificata_tabite);
+
+        codificata_lettino = codificaLettino(frasesenzaspazi);
+        System.out.println("LA FRASE CODIFICATA LETTINO E': "+codificata_lettino);
     }
 
     public static void main(String[] args) {
@@ -35,6 +39,26 @@ public class CryptoCraft {
         myapp.test();
     }
 
+    String codificaLettino(String originale) {
+
+        String codificata = "";
+        int lungh = originale.length();
+        int spostamento;
+
+        for (int pos =0; pos<lungh; pos=pos+1 ) {
+            char carattere_attuale = originale.charAt(pos);
+            spostamento = pos+1; // nb: il primo carattere ha pos=0, ma va spostato di 1
+
+            // converte la vecchia posizione nell'alfabeto nella nuova
+            int nuova_posizione_lettino =spostamento+ trova_pos(carattere_attuale);
+
+            while (nuova_posizione_lettino > 20) nuova_posizione_lettino = nuova_posizione_lettino - 21;
+
+            // aggiunge il nuovo carattere alla fine
+            codificata = codificata + alfabeto.charAt(nuova_posizione_lettino);
+        }
+        return codificata;
+    }
 
     String codificaTabite(String originale ) {
         String risultato = "";
